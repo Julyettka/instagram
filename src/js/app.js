@@ -8,8 +8,6 @@ document.getElementById('root').innerHTML = templates['main']();
 
 const rootElement = document.getElementById("root");
 
-
-
   const firebaseConfig = {
     apiKey: "AIzaSyBZpLoWmLxrvB5Bq-yuSlXBvXQeHuiYH1U",
     authDomain: "insta-911e0.firebaseapp.com",
@@ -19,7 +17,7 @@ const rootElement = document.getElementById("root");
     messagingSenderId: "856827070647"
   };
   firebase.initializeApp(firebaseConfig);
-  firebase.auth();
+  // firebase.auth();
 
   page('/', index);
   page('/signup', signup);
