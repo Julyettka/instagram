@@ -1,5 +1,7 @@
 class Editor {
     constructor(rootElement, props) {
+        //по дефолту определяется пропс, в случае если нам нужно что то изменить
+        // передаем в assign пропс конфигурацию
         this.root = rootElement;
         this.props            = Object.assign({}, Editor.defaults, props);
 
@@ -98,6 +100,7 @@ class Editor {
                 this._toggleBusyState();
                 this._toggleUploadingState();
                 this.props.onSave();
+                page.redirect('/');
             })
             // handle error while uploading or entry creation
             .catch(error => {
@@ -111,15 +114,15 @@ class Editor {
         const caption = this.caption.value.trim();
 
         if (!caption) return {};
-
-        const { uid, username } = this.props.currentUser;
+        
+        const { uid, displayName } = this.props.currentUser;
         const commentId = generateID('comment-');
 
         return {
             [commentId]: {
                 id: commentId,
                 value: caption,
-                author: username,
+                author: displayName,
                 authorId: uid,
                 created: moment().toJSON()
             }

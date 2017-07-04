@@ -1,4 +1,8 @@
-function login() {
+function login(ctx) {
+  let currentUser = ctx.user;
+  if (currentUser) {
+    page.redirect('/');
+  }
   rootElement.innerHTML = templates.login();
   let form = rootElement.querySelector('#login-form');
 

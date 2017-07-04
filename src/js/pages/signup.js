@@ -1,14 +1,12 @@
- function signup(){
-    let currentUser = firebase.auth().currentUser;
-
+function signup(ctx) {
+  let currentUser = ctx.user;
+    
     if (currentUser) {
       page.redirect('/');
     }
 
     rootElement.innerHTML = templates.signup();
 
-
- 
     let form = rootElement.querySelector('#signup-form'); //not getById because we use rootElement
       
       let signupForm = new VForm(form, [
@@ -60,6 +58,9 @@
 
       function successHandler(user) {
           signupForm.resetState();
+          user.updateProfile({
+            displayName: formData.username
+          });
           firebase.database().ref("users/" + user.uid).set({
             email: formData.email,
             displayName: formData.displayName,

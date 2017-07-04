@@ -30,7 +30,7 @@ let FormField = (function(){
             this.validators = validators;
             this.errors = [];
             this.errorEl = document.createElement("span");
-            this._bindEvents(); //why_?
+            this._bindEvents(); 
             this._setupValidators();
         }
 
