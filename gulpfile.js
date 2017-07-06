@@ -76,7 +76,7 @@ const bundleScripts = (src) => {
         path.join(__dirname, 'src', 'js')
       ]
     }))
-    .pipe(sourcemaps.write('./'))
+    .pipe(sourcemaps.write())
     .pipe(gulp.dest('public/js'));
 };
 

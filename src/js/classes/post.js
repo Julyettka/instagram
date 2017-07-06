@@ -9,13 +9,18 @@ class Post {
     this._bindEvents();
   }
 
+
   render(author) {
-    this.element.innerHTML = this.tpl(Object.assign({}, this.data, {
-      author: this.author,
-      currentUser: this.currentUser,
-      liked: this.liked,
-      likesCount: this.likesCount,
-    }));
+    if (!this.data){
+      this.element.innerHTML = "";
+    }else{
+      this.element.innerHTML = this.tpl(Object.assign({}, this.data, {
+        author: this.author,
+        currentUser: this.currentUser,
+        liked: this.liked,
+        likesCount: this.likesCount,
+      }));
+    }
   }
 
 
@@ -46,13 +51,23 @@ class Post {
 
    _onDataRetrieved(snapshot) {
     this.data = snapshot.val();
-    this.liked = !!(this.data.likes && this.data.likes[this.currentUser.uid]);
-    this.likesCount = !!(this.data.likes) ? Object.keys(this.data.likes).length : 0;
+      if (this.data){
+      this.liked = !!(this.data.likes && this.data.likes[this.currentUser.uid]);
+      this.likesCount = !!(this.data.likes) ? Object.keys(this.data.likes).length : 0;
+          // console.log(snapshot.val());
+    }
     this.render();
-    // console.log('data retrived', this.data);
+    
   }
 
   onDelete() {
+    let post = this.element.querySelector(".post");
+    let postId = this.data.id;
+    let ref = firebase.database().ref(`posts/${postId}`);
+    console.log(ref);
+    ref.remove();
+
+    // post.remove();
     // перевірка чи id автора рівний id поточного юзера
     // якщо ні, то показувати повідомлення що тільки власник може видалити коммент
     // та блокувати подальше виконання коду
@@ -101,7 +116,7 @@ class Post {
     this.onRemoveComment = delegate(this.element, 'click', '.comment__delete', this.onRemoveComment.bind(this));
 
     // івент на видалення поста
-
+    this.onDelete = delegate(this.element, "click", ".post__delete", this.onDelete.bind(this));
     // івент додавання коментаря
     delegate(this.element, "submit", ".post__add-comment", (e) => {
       e.preventDefault();
