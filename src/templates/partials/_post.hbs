@@ -23,7 +23,8 @@
     {{#each (sortBy comments 'created')}}
      <li class="comment" data-comment="{{ this.id }}">
       <span class="comment__author">{{ this.author }}</span>
-      <span class="comment__text">{{ this.value }}</span>
+      {{!-- {{#if hashtagWord}} --}}
+      <span class="comment__text">{{{ this.value }}}</span>
       <small class="comment__time">{{ formatDate this.created }}</small>
       {{#ifCond ../currentUser.uid '===' this.authorId }}
       <button class="comment__delete" title="Remove">

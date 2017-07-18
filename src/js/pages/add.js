@@ -7,5 +7,6 @@ function add(ctx) {
 
     let editorRoot = rootElement.querySelector('#editor');
     new Editor(editorRoot, {currentUser});
+   
 
 }

@@ -54,7 +54,6 @@ class Post {
       if (this.data){
       this.liked = !!(this.data.likes && this.data.likes[this.currentUser.uid]);
       this.likesCount = !!(this.data.likes) ? Object.keys(this.data.likes).length : 0;
-          // console.log(snapshot.val());
     }
     this.render();
     
@@ -82,6 +81,20 @@ class Post {
   onAddCommment(value) {
         let id = (generateID('comment-'));
         let { uid, displayName } = this.currentUser;
+        var hashtag_RE = /(#)/;
+        hashtag_RE.test(value);
+        if (hashtag_RE.test(value) == true){
+           var captionArray = value.split(" ");
+            var captionWithTags = captionArray.map(function(hashtag){
+                if (hashtag.charAt(0) == "#"){
+                    hashtag = "<a href=" + hashtag +">" + hashtag + "</a>";
+                }
+                return hashtag;
+                
+            })
+            value = captionWithTags.join(" ");
+
+        }
 
         this.dbRef.child(`comments/${id}`).set({
             id,
@@ -93,6 +106,7 @@ class Post {
             // повідомлення про помилку
         );
     }
+
   onRemoveComment(event) {
     let comment = this.element.querySelector(".comment"); //this.element потому что именно этого поста коммент
     let commentId = event.target.getAttribute("data-comment"); //retrieve comments unique code
@@ -123,6 +137,7 @@ class Post {
       this.onAddCommment(e.target.elements.comment.value);
     });
   }
+
 
   toggleLike() {
       // отримання лайка

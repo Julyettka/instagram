@@ -9,6 +9,7 @@ function index(ctx, next) {
 
   let feed = document.querySelector('.feed');
   const dbRef = firebase.database().ref();
+ 
 
     dbRef
     .child('posts')
@@ -28,5 +29,3 @@ function index(ctx, next) {
 
 
 
-//апдейтить имя юзера в базу
-//заменить email на displayName  в addComments & in Editor

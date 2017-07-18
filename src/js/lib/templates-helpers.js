@@ -26,7 +26,7 @@
      */
 
     const sortBy = (collection = [], propName, invert) => {
-      console.time('sort');
+
       const copy = Array.isArray(collection)
         ? collection.slice()
         : Object.keys(collection).map(k => collection[k]);

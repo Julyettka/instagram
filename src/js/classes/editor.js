@@ -92,6 +92,7 @@ class Editor {
                         width: this.caman.width,
                         height: this.caman.height
                     },
+                    hashtags: this._getHashTags(),
                     comments: this._getComments()
                 });
             })
@@ -111,22 +112,56 @@ class Editor {
 
     // get caption and add it to the post as first comment
     _getComments() {
-        const caption = this.caption.value.trim();
-
+        let caption = this.caption.value.trim();
         if (!caption) return {};
-        
         const { uid, displayName } = this.props.currentUser;
         const commentId = generateID('comment-');
+        //checking whether it contains hashtags
+        var hashtag_RE = /(#)/;
+        hashtag_RE.test(caption);
+        if (hashtag_RE.test(caption) == true){
+            var captionArray = caption.split(" ");
+            var captionWithTags = captionArray.map(function(hashtag){
+                if (hashtag.charAt(0) == "#"){
+                    hashtag = "<a href=" + hashtag +">" + hashtag + "</a>";
+                }
+                return hashtag;
+                
+            })
+            caption = captionWithTags.join(" ");
+
+        }
 
         return {
-            [commentId]: {
-                id: commentId,
-                value: caption,
-                author: displayName,
-                authorId: uid,
-                created: moment().toJSON()
+                [commentId]: {
+                    id: commentId,
+                    value: caption,
+                    author: displayName,
+                    authorId: uid,
+                    created: moment().toJSON()
+                }
+            };
+        
+    }
+
+    _getHashTags(){
+        const caption = this.caption.value.trim();
+        const hashtagId = generateID('hashtag-');
+        var captionArray = caption.split(" ");
+            var hashtagWords = captionArray.filter(function(hashtag){
+                if (hashtag.charAt(0) == "#"){
+                    return hashtag;
+                }
+            });
+            var arrHashtags = [];
+            for (let i = 0; i < hashtagWords.length; i++){
+                arrHashtags.push(
+                    { id: hashtagId,
+                    hashtag: hashtagWords[i],
+                    created: moment().toJSON()}
+                )
             }
-        };
+        return arrHashtags;      
     }
 
     _highlightActiveFilter() {
