@@ -21,7 +21,7 @@ document.getElementById('root').innerHTML = templates['main']();
   // firebase.auth();
   page("*", auth);
   page('/', index);
-  page("/hashbang", hashtags); //don't know how to route it properly
+  page("/hashtags/:hashtag", hashtags); //don't know how to route it properly
   page('/signup', signup);
   page('/login', login);
   page("/logout", logout);
@@ -29,7 +29,7 @@ document.getElementById('root').innerHTML = templates['main']();
   page("/profile", profile);
   page("/profile/edit", profileEdit);
   page('*', notfound);
-  
+
   
 
   firebase.auth().onAuthStateChanged(function(){

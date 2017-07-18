@@ -123,7 +123,7 @@ class Editor {
             var captionArray = caption.split(" ");
             var captionWithTags = captionArray.map(function(hashtag){
                 if (hashtag.charAt(0) == "#"){
-                    hashtag = "<a href=" + hashtag +">" + hashtag + "</a>";
+                    hashtag = "<a href=/hashtags/" + hashtag.replace('#', '') +">" + hashtag + "</a>";
                 }
                 return hashtag;
                 
@@ -153,6 +153,13 @@ class Editor {
                     return hashtag;
                 }
             });
+
+            hashtagWords = hashtagWords.map(function(hashtag){
+                hashtag = hashtag.replace("#", "");
+                return hashtag;
+            })
+
+            
             var arrHashtags = [];
             for (let i = 0; i < hashtagWords.length; i++){
                 arrHashtags.push(

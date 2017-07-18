@@ -87,7 +87,7 @@ class Post {
            var captionArray = value.split(" ");
             var captionWithTags = captionArray.map(function(hashtag){
                 if (hashtag.charAt(0) == "#"){
-                    hashtag = "<a href=" + hashtag +">" + hashtag + "</a>";
+                    hashtag = "<a href=/hashtags/" + hashtag.replace("#", "") +">" + hashtag + "</a>";
                 }
                 return hashtag;
                 
