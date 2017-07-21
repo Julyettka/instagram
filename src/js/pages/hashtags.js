@@ -15,29 +15,23 @@ function hashtags(ctx) {
   let url = window.location.href;
   let arrUrl = url.split("/");
   let hashwordinUrl = arrUrl[arrUrl.length-1];
-  console.log("The url is " + hashwordinUrl);
+  
 
     dbRef
     .child('posts')
     .once('value', snapshot => {
       let posts = snapshot.val();
       let filteredPosts = [];
-      // console.log(posts);
       posts = Object.keys(posts).map(k => posts[k]);
-      // console.log(posts);
+      
+      posts = posts.filter((post) => {
 
-      for (let i = 0; i < posts.length; i++){
-        let hashtagsArr = posts[i].hashtags;
-        for (let j = 0; j < hashtagsArr.length; j++){
-          // console.log(hashtagsArr[j].hashtag);
-          if (hashwordinUrl === hashtagsArr[j].hashtag){
-            console.log(hashtagsArr[j].hashtag);
-            filteredPosts.push(posts[i]);
-          }
-        }
-      }
+        let isHashtagMapped = post.hashtags.some((hashtag) => {
+          return hashtag.hashtag === hashwordinUrl;
+        });
 
-      posts = filteredPosts;
+        return isHashtagMapped;
+      });
       
 
       posts = posts.sort((a, b) => {
@@ -50,7 +44,6 @@ function hashtags(ctx) {
     });
 }
 
-    // dbRef.child("hashtags[i].hashtag")
 
 
 
