@@ -1,8 +1,10 @@
 # Project overview
+
+![insta](readme_pics/index.png)
 This instagram project basically does the same as original one.
 User can register/login and see the pictures other users add. Also, the users is able to post photos and apply filters to them.
 Data is saved using Firebase service.
-
+![add](readme_pics/add.png)
 
 # Getting started
 0. This app requires npm to build, if Node and npm are not installed on your device, you should install it first. More info can be found [here](https://docs.npmjs.com/getting-started/installing-node)
